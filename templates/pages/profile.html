@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'pages/base.html' %}
 {% load static %}
 
 {% block main %}
@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="{% url 'main:index' %}">Let's Duel</a>
+      <a class="navbar-brand" href="{% url 'main:profile' %}">Let's Duel</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -15,10 +15,10 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'main:add_post' %}">New Post <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{% url 'main:add_post' %}">Добавить работу <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'main:album' %}">Альбом</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#">Disabled</a>
@@ -33,11 +33,12 @@
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            {% if user.is_staff %} }
-            <div style="color: red">Администратор {{ user.username }}</div>
+            {% if user.is_staff %}
+                <div class="name" style="color: red">Администратор {{ user.username }}</div>
+            {% else%}
+                <div class="name" style="color: gray">Пользователь {{ user.username }}</div>
             {% endif %}
-
-              <a class="nav-link" href="{% url 'login:logout' %}">Log out</a>
+              <a class="nav-link" href="{% url 'login:logout' %}">Выйти</a>
 
 
 
@@ -48,11 +49,12 @@
 
     <main role="main" class="container">
 
-      <div class="starter-template">
-        <h1>Личный кабинет пользователя</h1>
-        <p class="lead">{{ test }}<br> All you get is this text and a mostly barebones HTML document.</p>
-      </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <div class="starter-template">
+
+        <p>Всего работ {{ post_count }}</p>
+
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
     <script src="{% static 'bootstrap/vendor/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
