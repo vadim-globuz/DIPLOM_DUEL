@@ -18,14 +18,17 @@ def index(request):
 
 @login_required()
 def profile(request):
-    template = loader.get_template('pages/profile.html')
-    model = Post.objects.all()
+    template = loader.get_template('pages/dashboard.html')
+    models = Post.objects.all().filter(key=request.user.id)
+    counter = models.count()
     context = {
-        'posts_count': model.filter(key=request.user.id)
+        'works': models,
+        'count': counter,
     }
     return HttpResponse(template.render(context, request))
 
 
+@login_required()
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
@@ -43,8 +46,21 @@ def post_new(request):
 @login_required()
 def album_view(request):
     template = loader.get_template('pages/album.html')
-    model = Post.objects.all()
+    model = Post.objects.filter(key=request.user.id)
     context = {
-        'images': model.filter(key=request.user.id)
+        'images': model
     }
+    return HttpResponse(template.render(context, request))
+
+@login_required()
+def duel_get_works(request):
+    template = loader.get_template('pages/duel_main.html')
+    model = Post.objects.exclude(key=request.user.id)
+    context= {
+        'deuce': model
+    }
+    if request.method == "POST":
+        selected_choice = model.get(pk=request.POST['work_id'])
+        selected_choice.rate += 1
+        selected_choice.save()
     return HttpResponse(template.render(context, request))
