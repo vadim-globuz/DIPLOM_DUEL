@@ -7,7 +7,7 @@ from .forms import Register
 
 class SignUpView(generic.CreateView):
     form_class = UserCreationForm
-    success_url = reverse_lazy('main:index')
+
     template_name = 'registration/signup.html'
 
 
@@ -21,7 +21,7 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             # Save the User object
             new_user.save()
-            return render(request, 'registration/login.html', {'form': new_user})
+            return render(request, 'pages/index.html', {'form': new_user})
     else:
         user_form = Register()
-    return render(request, 'registration/signup.html', {'user_form': user_form})
+    return render(request, 'registration/signup.html', {'form': user_form})

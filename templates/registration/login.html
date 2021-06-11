@@ -1,13 +1,35 @@
 {% extends 'pages/base.html' %}
 {% load bootstrap4 %}
+{% load static %}
+
 {% block main %}
-<h2>login</h2>
-<form method="post">
-  {% csrf_token %}
-   {% bootstrap_form form %}
-        {% buttons %}
-        <button type="submit" class="btn btn-primary col-1 p-2">Submit</button>
-        {% endbuttons %}
+
+
+<body class="text-center">
+     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <form method="post" class="form-signin">
+
+        {% csrf_token %}
+      <img class="mb-4" src="{% static 'bootstrap-solid.svg'   %}" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      {% bootstrap_form form %}
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+          {% buttons %}
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+         {% endbuttons %}
+      <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
+
+
+
+
+
+
+
 
 </form>
 {% endblock main %}
+  </body>

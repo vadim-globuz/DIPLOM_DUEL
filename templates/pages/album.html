@@ -2,59 +2,70 @@
  {% load static %}
 {% block main %}
   <body>
-    <link href="{% static 'css/album.css' %}" rel="stylesheet">
-    <header>
-      <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-8 col-md-7 py-4">
-              <h4 class="text-white">About</h4>
-              <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-        </header>
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+ <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Let's Duel {{ user.first_name}}</a>
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="{% url 'login:logout' %}">Выход</a>
+        </li>
+      </ul>
+    </nav>
 
-    <main role="main">
+    <div class="container-fluid">
+      <main class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:profile' %}">
+                  <span data-feather="home"></span>
+                  Личный Кабинет
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:add_post' %}">
+                  <span data-feather="image"></span>
+                  Добавить работы
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'main:album' %}">
+                  <span data-feather="book-open"></span>
+                  Галерея<span class="sr-only">(current)</span>
+                </a>
+              </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:duel' %}">
+                  <span data-feather="book-open"></span>
+                  Дуэли
+                </a>
+              </li>
 
-      <section class="jumbotron text-center">
-        <div class="container">
-          <h1 class="jumbotron-heading">Ваш альбом</h1>
-          <p class="lead text-muted">Ваши работы и их статистика</p>
-          <p>
-            <a href="{% url 'main:profile' %}" class="btn btn-primary my-2">В профиль</a>
-            <a href="{% url 'main:add_post' %}" class="btn btn-secondary my-2">Добавить работу</a>
-          </p>
-        </div>
-      </section>
+            </ul>
 
- <div class="album py-5 bg-light">
-        <div class="container">
 
-          <div class="row">
-              {% for photo in images %}
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img style="height: 100%; width: auto" class="card-img-top" src="{{ photo.cover.url}}" alt="">
-                <div class="card-body">
-                  <p class="card-text">{{ photo.title }}</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-
-                    </div>
-                    <small class="text-muted">{{ photo.rate}} голосов</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-              {% endfor %}
 
           </div>
+        </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <h1 class="h3 text-center my-4">Галерея пользователя {{ user.first_name }}</h1>
+
+    <div class="row">
+        {% for photo in images %}
+        <div class="col-lg-3 col-md-4 col-6 thumb">
+            <a data-fancybox="gallery" href="{{ photo.cover.url }}">
+                <img class="img-fluid" src="{{ photo.cover.url }}" alt="...">
+            </a>
         </div>
-      </div>
-    </main>
 
+{% endfor %}
+    </div>
 
-  </body>
+</main>
+ <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
 {% endblock %}
